@@ -14,10 +14,10 @@ def rename(sub_path):
     # Iterate over all files in the directory
     for filename in os.listdir(data_dirctory+sub_path):
     # Check if the file is a PNG image
-        if filename.endswith('.png'):
+        if filename.endswith('.png') or filename.endswith('.jpg') :
             # Rename the PNG file
             old_path = os.path.join(data_dirctory+sub_path, filename)
-            new_path = os.path.join(data_dirctory+target_path, f"{counter}.tiff")
+            new_path = os.path.join(data_dirctory+target_path, f"{counter}.tif")
 
             png_image = Image.open(old_path)
             png_image.save(new_path, 'TIFF')
@@ -31,7 +31,6 @@ def rename(sub_path):
 
             # Increment the counter
             counter += 1
-
 
 
 def convert_png_to_tiff(png_files, output_dir):
