@@ -6,7 +6,7 @@ import zipfile
 
 data_dirctory = './Data'
 
-target_path = '/1'
+target_path = '/2'
 
 
 def rename(sub_path):
@@ -95,7 +95,7 @@ def create_zip(directory, zip_file):
 
 # Example usage
 directory = data_dirctory + target_path
-zip_file = './Data/Version1.zip'
+zip_file = './Data/Version2.zip'
 create_zip(directory, zip_file)
 
 
@@ -103,4 +103,4 @@ create_zip(directory, zip_file)
 #convert_png_to_tiff(png_files, data_dirctory+"/1")
 #copy_txt_files(data_dirctory, data_dirctory+"/1")
 
-#rename('/ak')
+#rename('/mj')
