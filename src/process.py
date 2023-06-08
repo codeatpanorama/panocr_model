@@ -20,14 +20,16 @@ def rename(sub_path):
             new_path = os.path.join(data_dirctory+target_path, f"{counter}.tif")
 
             png_image = Image.open(old_path)
-            png_image.save(new_path, 'TIFF')
-            png_image.close()
+
+            grayscale_image = png_image.convert('L')
+            grayscale_image.save(new_path, 'TIFF')
+            grayscale_image.close()
 
             # Construct the corresponding TXT file name
             txt_filename = os.path.splitext(filename)[0] + ".txt"
             txt_old_path = os.path.join(data_dirctory+sub_path, txt_filename)
             txt_new_path = os.path.join(data_dirctory+target_path, f"{counter}.gt.txt")
-            os.rename(txt_old_path, txt_new_path)
+            shutil.copy2(txt_old_path, txt_new_path)
 
             # Increment the counter
             counter += 1
