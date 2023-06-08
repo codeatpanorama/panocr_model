@@ -9,7 +9,7 @@ data_dirctory = './Data'
 target_path = '/2'
 
 
-def rename(sub_path):
+def rename(sub_path, prefix):
     counter = 1
     # Iterate over all files in the directory
     for filename in os.listdir(data_dirctory+sub_path):
@@ -17,18 +17,20 @@ def rename(sub_path):
         if filename.endswith('.png') or filename.endswith('.jpg') :
             # Rename the PNG file
             old_path = os.path.join(data_dirctory+sub_path, filename)
-            new_path = os.path.join(data_dirctory+target_path, f"{counter}.tif")
-
+            new_path = os.path.join(data_dirctory+target_path, f"{prefix}-{counter}.tif")
             png_image = Image.open(old_path)
 
             grayscale_image = png_image.convert('L')
+            grayscale_image_info = grayscale_image.info.copy()
+            grayscale_image_info['dpi'] = (300, 300)
+
             grayscale_image.save(new_path, 'TIFF')
             grayscale_image.close()
 
             # Construct the corresponding TXT file name
             txt_filename = os.path.splitext(filename)[0] + ".txt"
             txt_old_path = os.path.join(data_dirctory+sub_path, txt_filename)
-            txt_new_path = os.path.join(data_dirctory+target_path, f"{counter}.gt.txt")
+            txt_new_path = os.path.join(data_dirctory+target_path, f"{prefix}-{counter}.gt.txt")
             shutil.copy2(txt_old_path, txt_new_path)
 
             # Increment the counter
@@ -93,6 +95,24 @@ def create_zip(directory, zip_file):
     
     print(f"Successfully created {zip_file}")
 
+
+def get_tiff_dpi(tiff_file):
+    image = Image.open(tiff_file)
+    dpi = image.info.get('dpi')
+    image.close()
+    return dpi
+
+'''
+# Example usage
+tiff_file = './Data/2/1.tif'
+dpi = get_tiff_dpi(tiff_file)
+if dpi:
+    x_dpi, y_dpi = dpi
+    print(f"DPI of {tiff_file}: X={x_dpi}, Y={y_dpi}")
+else:
+    print(f"No DPI information found in {tiff_file}")
+'''
+
 # Example usage
 directory = data_dirctory + target_path
 zip_file = './Data/Version2.zip'
@@ -103,4 +123,4 @@ create_zip(directory, zip_file)
 #convert_png_to_tiff(png_files, data_dirctory+"/1")
 #copy_txt_files(data_dirctory, data_dirctory+"/1")
 
-#rename('/mj')
+#rename('/ak', 'ak')
