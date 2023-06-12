@@ -21,11 +21,17 @@ def rename(sub_path, prefix):
             png_image = Image.open(old_path)
 
             grayscale_image = png_image.convert('L')
-            grayscale_image_info = grayscale_image.info.copy()
-            grayscale_image_info['dpi'] = (300, 300)
+            #grayscale_image_info = grayscale_image.info.copy()
+            #grayscale_image_info['dpi'] = (300, 300)
 
             grayscale_image.save(new_path, 'TIFF')
             grayscale_image.close()
+
+            tiff_image = Image.open(new_path)
+            tiff_image.info['dpi'] = (300, 300)
+            tiff_image.save(new_path)
+
+            tiff_image = Image.open(new_path)
 
             # Construct the corresponding TXT file name
             txt_filename = os.path.splitext(filename)[0] + ".txt"
@@ -114,13 +120,13 @@ else:
 '''
 
 # Example usage
-directory = data_dirctory + target_path
-zip_file = './Data/Version2.zip'
-create_zip(directory, zip_file)
+#directory = data_dirctory + target_path
+#zip_file = './Data/Version2.zip'
+#create_zip(directory, zip_file)
 
 
 #png_files = get_png_files(data_dirctory)
 #convert_png_to_tiff(png_files, data_dirctory+"/1")
 #copy_txt_files(data_dirctory, data_dirctory+"/1")
 
-#rename('/ak', 'ak')
+rename('/mj', 'mj')
