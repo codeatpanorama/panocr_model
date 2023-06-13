@@ -23,7 +23,10 @@ def rename(sub_path, prefix):
             grayscale_image = png_image.convert('L')
             #grayscale_image_info = grayscale_image.info.copy()
             #grayscale_image_info['dpi'] = (300, 300)
+            
+            new_size = (3600, 480) 
 
+            grayscale_image.resize(new_size)
             grayscale_image.save(new_path, 'TIFF')
             grayscale_image.close()
 
@@ -120,13 +123,24 @@ else:
 '''
 
 # Example usage
-#directory = data_dirctory + target_path
-#zip_file = './Data/Version2.zip'
-#create_zip(directory, zip_file)
+directory = data_dirctory + target_path
+zip_file = './Data/Version2.zip'
+create_zip(directory, zip_file)
 
 
 #png_files = get_png_files(data_dirctory)
 #convert_png_to_tiff(png_files, data_dirctory+"/1")
 #copy_txt_files(data_dirctory, data_dirctory+"/1")
 
-rename('/mj', 'mj')
+#rename('/mj', 'mj')
+
+
+def resize():
+    image = Image.open(data_dirctory+target_path+"/ak-1.tif")
+    new_size = (3600, 480)  # Specify the new size as a tuple (width, height)
+    resized_image = image.resize(new_size)
+
+    # Save the resized image
+    resized_image.save(data_dirctory+target_path+"/ak-1-1.tif")
+
+#resize()
