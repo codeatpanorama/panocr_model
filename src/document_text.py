@@ -14,7 +14,7 @@ location = 'us' # Format is 'us' or 'eu'
 processor_id = '68dcba16f1138886' # Create processor before running sample
 processor_version = 'pretrained-ocr-v1.0-2020-09-23' # Refer to https://cloud.google.com/document-ai/docs/manage-processor-versions for more information
 file_path = './Data/mht/01.png'
-mime_type = 'image/png' # Refer to https://cloud.google.com/document-ai/docs/file-types for supported file types
+mime_type = 'image/tiff' # Refer to https://cloud.google.com/document-ai/docs/file-types for supported file types
 
 
 def process_document_ocr_sample(
@@ -54,9 +54,28 @@ def process_document_ocr_sample(
     '''
     return text
 
-png_dir = './Data/mht'
+png_dir = './Data/marathi_handwritten_text/tif-300-dpi'
+
 
 def create_files():
+    count = 0
+    for tif_file in os.listdir(png_dir):
+        if tif_file.endswith(".tif"):
+            gt_file = os.path.join(png_dir, tif_file.replace(".tif", ".gt.txt"))
+            tif_path = os.path.join(png_dir, tif_file)
+            if not os.path.exists(gt_file):
+                print(f"Missing .gt.txt file for {tif_file}")
+                count = count +1
+                text = process_document_ocr_sample(project_id, location, processor_id, processor_version, tif_path, mime_type)
+                # Construct the output file path
+                output_file = os.path.join(tif_path.replace('.tif', '.gt.txt'))
+
+                # Write the text to the output file
+                with open(output_file, 'w') as file:
+                    file.write(text)
+
+
+    '''
     for filename in os.listdir(png_dir):
         if filename.endswith('.png'):
             # Construct the full path to the PNG file
@@ -70,6 +89,7 @@ def create_files():
             # Write the text to the output file
             with open(output_file, 'w') as file:
                 file.write(text)
+    '''
 
 
 
