@@ -211,6 +211,7 @@ def layout_to_text(layout: documentai.Document.Page.Layout, text: str) -> str:
 
 #create_files()
 
+'''
 for filename in os.listdir(png_dir):
     if filename.endswith(".txt"):
         file_path = os.path.join(png_dir, filename)
@@ -227,3 +228,11 @@ for filename in os.listdir(png_dir):
             
             file.truncate()  # Remove any remaining content after the modified lines
 
+directory = "path/to/directory"'''
+
+for filename in os.listdir(png_dir):
+    if filename.endswith(".txt"):
+        file_path = os.path.join(png_dir, filename)
+        
+        if os.path.getsize(file_path) == 0:
+            print(f"{filename}")
