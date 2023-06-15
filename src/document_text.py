@@ -131,8 +131,6 @@ def process_document(
 
     return result.document
 
-create_files()
-
 
 def print_page_dimensions(dimension: documentai.Document.Page.Dimension) -> None:
     print(f"    Width: {str(dimension.width)}")
@@ -211,4 +209,21 @@ def layout_to_text(layout: documentai.Document.Page.Layout, text: str) -> str:
         response += text[start_index:end_index]
     return response
 
+#create_files()
+
+for filename in os.listdir(png_dir):
+    if filename.endswith(".txt"):
+        file_path = os.path.join(png_dir, filename)
+        
+        with open(file_path, "r+") as file:
+            lines = file.readlines()
+            file.seek(0)  # Move the file pointer to the beginning of the file
+            
+            for line in lines:
+                if line.strip():  # Check if the line is not empty after stripping whitespace
+                    line = line.rstrip("\n")  # Remove trailing newline character
+                    file.write(line)
+                    
+            
+            file.truncate()  # Remove any remaining content after the modified lines
 
