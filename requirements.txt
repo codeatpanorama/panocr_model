@@ -1,3 +1,6 @@
 Pillow
 opencv-python
 pytesseract
+google-api-core
+google-cloud
+google-cloud-documentai
